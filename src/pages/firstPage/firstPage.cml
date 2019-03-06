@@ -1,0 +1,100 @@
+<template>
+  <view class="firstMainBox">
+    <button text="返回" @onclick="back" class="gobacks" style="width:100%;"></button>
+    <mysss @sendMsg="getMsg"></mysss>
+    <view>{{storeNum}} || {{getNum}}</view>
+    <view>{{msg}}</view>
+  </view>
+</template>
+
+<script>
+import store from '../../store'
+import cml from 'chameleon-api'
+class FirstPage   {
+
+  data = {
+    msg: '原始msg'
+  }
+
+  computed = {
+    storeNum () {
+      return store.getters.getNum
+    },
+    ...store.mapGetters([
+      'getNum'
+    ])
+  }
+
+  watch  = {
+  }
+
+  methods = {
+    back () {
+      cml.redirectTo({
+        path: '/pages/index/index',
+        query: {
+          a: 1,
+          b: 'test'
+        }
+      })
+    },
+    getMsg(val) {
+      console.log(val)
+      this.msg = val._originEvent.detail
+    }
+  }
+
+  beforeCreate() {
+  }
+
+  created() {
+  }
+
+  beforeMount() {
+  }
+
+  mounted() {
+  }
+
+  beforeDestroy() {
+  }
+
+  destroyed() {
+  }
+}
+
+export default new FirstPage();
+</script>
+
+<style>
+.firstMainBox {
+  background: #272822;
+  width: 100vw;
+  height: 100vh;
+  color: #6dd6f0;
+  color: tan;
+}
+.gobacks {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  line-height: 40cpx;
+  height: 40cpx;
+}
+</style>
+
+<script cml-type="json">
+{
+  "base": {
+    "usingComponents": {
+      "mysss": "../../components/mysss/mysss",
+      "demo-com": "/components/demo-com/demo-com"
+    }
+  },
+  "wx": {
+    "navigationBarTitleText": "index",
+    "backgroundTextStyle": "dark",
+    "backgroundColor": "#E2E2E2"
+  }
+}
+</script>

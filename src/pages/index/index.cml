@@ -1,0 +1,178 @@
+<template>
+  <view class="indexBox">
+    <h3 c-bind:tap="gofirstpage">chameleon学习</h3>
+    <view v-for="(item,index) in arr" :key="index" :style="{color:item.color,marginBottom:'20cpx'}">{{item.name}}</view>
+    <view class="borders"></view>
+    <switch
+      checked="{{ switchValue }}"
+      c-bind:change="switchChange"
+      label="设计理念"
+      >
+    </switch>
+    <view v-show="switchValue">  软件架构设计里面最基础的概念“拆分”和“合并”，拆分的意义是“分而治之”，将复杂问题拆分成单一问题解决，比如后端业务系统的”微服务化“设计；“合并”的意义是将同样的业务需求抽象收敛到一块，达成高效率高质量的目的，例如后端业务系统中的“中台服务”设计。</view>
+    <view v-show="switchValue" style="margin-top:40cpx;">  而 Chameleon 属于后者，通过定义统一的语言框架+统一多态协议，从多端（对应多个独立服务）业务中抽离出自成体系、连续性强、可维护强的“前端中台服务”。</view>
+    <view class="routers" @click="nextRoute">进入下一个page</view>
+    <view class="circle" c-animation="{{animationData}}"></view>
+
+    <view class="circle circle2"></view>
+    <view class="circle circle3"></view>
+  </view>
+</template>
+
+<script>
+import cml from 'chameleon-api'
+const animation = cml.createAnimation()
+class Index {
+  data = {
+    animationData: null,
+    arr: [
+      {
+        name: 'CML',
+        color: 'red'
+      },
+      {
+        name: 'CMSS',
+        color: 'green'
+      },
+      {
+        name: 'JAVASCRIPT',
+        color: 'yellow'
+      }
+    ],
+    switchValue: false
+  }
+
+  computed = {
+  }
+
+  watch = {
+  }
+
+  methods = {
+    gofirstpage () {
+      cml.redirectTo({
+        path: '/pages/firstPage/firstPage',
+        query: {
+          a: 2,
+          b: 'test2'
+        }
+      })
+    },
+    circleAnimation () {
+      this.animationData = animation
+        .translateX(200).step({duration: 1000})
+        .translateY(200).step({duration: 1000})
+        .width(100).step({duration: 1000})
+        .height(100).step({duration: 1000})
+        .backgroundColor('#6dd6f0').step({duration: 1000})
+        .opacity(0.2).step({duration: 3000})
+        .export()
+    },
+    circleAnimation2 () {
+      this.animationData = animation
+        .opacity(0.6).step({duration: 3000})
+        .backgroundColor('tan').step({duration: 1000})
+        .height(60).step({duration: 1000})
+        .width(60).step({duration: 1000})
+        .translateY(-20).step({duration: 1000})
+        .translateX(-20).step({duration: 1000})
+        .backgroundColor('#6dd6f0').step({duration: 1000})
+        .opacity(0.2).step({duration: 3000})
+        .export()
+    },
+    switchChange (e) {
+      this.switchValue = e.detail.value
+    },
+    nextRoute () {
+      cml.redirectTo({
+        path: '/pages/firstPage/firstPage',
+        query: {
+          a: 2,
+          b: 'test2'
+        }
+      })
+    }
+  }
+
+  created () {
+  }
+
+  mounted () {
+    this.circleAnimation()
+    setTimeout(() => {
+      this.circleAnimation2()
+    }, 7000)
+  }
+}
+
+export default new Index();
+</script>
+<style scoped>
+.indexBox {
+  padding: 20cpx 40cpx;
+  width: 100vw;
+  height: 100vh;
+  background: #272822 url('../../assets/images/girlsmall.png') no-repeat fixed right bottom;
+  color: #6dd6f0;
+  color: tan;
+  position: relative;
+}
+.borders {
+  width: 100%;
+  height: 2cpx;
+  background: tan;
+  margin-bottom: 20cpx;
+}
+.routers {
+  position: absolute;
+  bottom: 100cpx;
+  left: 100cpx;
+  padding: 60cpx;
+  display: inline-block;
+  background: rgb(9, 18, 70);
+  border-radius: 12cpx;
+}
+.routers:before {
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 60cpx;
+  background: rgb(9, 18, 70);
+  content: '';
+  left: 100%;
+  border: 30cpx solid #272822;
+  border-left: 30cpx solid rgb(9, 18, 70);
+}
+.circle, .circle2, .circle3 {
+  position: absolute;
+  top: 40cpx;
+  left: 40cpx;
+  width: 60cpx;
+  height: 60cpx;
+  border-radius: 50%;
+  background: rgb(230, 154, 69);
+  opacity: 0.2;
+}
+.circle2 {
+  width: 94cpx;
+  height: 94cpx;
+  top: 480cpx;
+  left: 300cpx;
+  opacity: 0.2;
+}
+.circle3 {
+  background: rgba(131, 214, 123, 0.671);
+  width: 34cpx;
+  height: 34cpx;
+  top: 1080cpx;
+  left: 30cpx;
+}
+</style>
+<script cml-type="json">
+{
+  "base": {
+    "usingComponents": {
+    }
+  }
+}
+</script>

@@ -1,0 +1,93 @@
+<template>
+  <view class="cons">
+    <view class="topBox"><span class="titles">益达组件</span></view>
+    <button
+      type="green"
+      text="改变store值"
+      @onclick="storeNumAdd"
+      style="width:100%;margin-bottom:20cpx;"
+    >
+    </button>
+    <button
+      type="green"
+      text="传值"
+      @onclick="sendMsg"
+      style="width:100%;"
+    >
+    </button>
+  </view>
+</template>
+
+<script>
+import store from '../../store'
+class Mysss {
+  props = {
+    contents: {
+      type: String,
+      default: '父组件传递内容'
+    }
+  }
+
+  data = {
+  }
+
+  computed = {
+  }
+
+  watch  = {
+  }
+
+  methods = {
+    storeNumAdd () {
+      store.commit('increment', 1)
+    },
+    sendMsg() {
+      console.log('sendmsg')
+      this.$cmlEmit('sendMsg', Math.random().toFixed(3))
+    }
+  }
+
+  beforeCreate() {
+  }
+
+  created() {
+  }
+
+  beforeMount() {
+  }
+
+  mounted() {
+  }
+
+  beforeDestroy() {
+  }
+
+  destroyed() {
+  }
+}
+
+export default new Mysss();
+</script>
+<style>
+.cons {
+  background: rgb(112, 21, 21);
+  padding: 20cpx;
+}
+.topBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.titles {
+  color: tan;
+  font-size: 40cpx;
+  padding: 20cpx 0;
+}
+</style>
+<script cml-type="json">
+{
+  "base": {
+    "usingComponents": {}
+  }
+}
+</script>
